@@ -8,17 +8,8 @@ stages:
   jobs:
   - job: build
     steps:
-
-    # 1️⃣ Install Maven
-    - task: Maven@3
-      inputs:
-        mavenVersionOption: 'Default'
-        mavenAuthenticateFeed: false
-
-    # 2️⃣ Run Maven via PowerShell
     - task: PowerShell@2
       inputs:
         targetType: 'inline'
         script: |
-          mvn -version
           mvn clean package
