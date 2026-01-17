@@ -1,35 +1,20 @@
 trigger: none
 
-pool:
-  name: my agent pool   # self-hosted agent pool
-
-variables:
-  tomcatHome: /opt/tomcat
-  appName: JavaLoginShowcase
+pool: my agent pool
 
 stages:
-# ======================
-# BUILD STAGE
-# ======================
-- stage: Build
-  displayName: Build WAR
-  jobs:
-  - job: MavenBuild
-    displayName: Maven Build
-    steps:
-    - checkout: self
-
-    - task: Maven@3
-      displayName: Maven Clean Package
-      inputs:
-        mavenPomFile: 'pom.xml'
-        goals: 'clean package'
-        javaHomeOption: 'JDKVersion'
-        jdkVersionOption: '1.8'
-        mavenVersionOption: 'Default'
-
-    - task: PublishBuildArtifacts@1
-      displayName: Publish WAR Artifact
-      inputs:
-        pathToPublish: 'target'
-        artifactName: 'war'
+  - stage: build
+    jobs:
+      - job: 
+        steps:
+        - task: Maven@4
+          inputs:
+            azureSubscription: 'todo-service-connection'
+            mavenPomFile: 'pom.xml'
+            publishJUnitResults: true
+            testResultsFiles: '**/surefire-reports/TEST-*.xml'
+            javaHomeOption: 'JDKVersion'
+            mavenVersionOption: 'Default'
+            mavenAuthenticateFeed: false
+            effectivePomSkip: false
+            sonarQubeRunAnalysis: false
