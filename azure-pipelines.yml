@@ -1,15 +1,36 @@
-trigger: none
+trigger:
+- main
 
 pool:
-  name: my agent pool
+  name: my agent pool   # self-hosted agent pool
+
+variables:
+  tomcatHome: /opt/tomcat
+  appName: JavaLoginShowcase
 
 stages:
-- stage: build
+# ======================
+# BUILD STAGE
+# ======================
+- stage: Build
+  displayName: Build WAR
   jobs:
-  - job: build
+  - job: MavenBuild
+    displayName: Maven Build
     steps:
-    - task: JavaToolInstaller@1
+    - checkout: self
+
+    - task: Maven@3
+      displayName: Maven Clean Package
       inputs:
-        versionSpec: '17'
-        jdkArchitectureOption: 'x64'
-        jdkSourceOption: 'PreInstalled'
+        mavenPomFile: 'pom.xml'
+        goals: 'clean package'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        mavenVersionOption: 'Default'
+
+    - task: PublishBuildArtifacts@1
+      displayName: Publish WAR Artifact
+      inputs:
+        pathToPublish: 'target'
+        artifactName: 'war'
