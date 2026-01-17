@@ -1,5 +1,4 @@
-trigger:
-- main
+trigger: none
 
 pool:
   name: my agent pool   # self-hosted agent pool
