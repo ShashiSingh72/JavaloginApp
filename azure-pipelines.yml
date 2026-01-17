@@ -7,7 +7,14 @@ stages:
     jobs:
       - job: build
         steps:
-        - task: PowerShell@2
+        - task: Maven@4
           inputs:
-            targetType: 'inline'
-            script: 'mvn clean package'
+            azureSubscription: 'todo-service-connection'
+            mavenPomFile: 'pom.xml'
+            publishJUnitResults: true
+            testResultsFiles: '**/surefire-reports/TEST-*.xml'
+            javaHomeOption: 'JDKVersion'
+            mavenVersionOption: 'Default'
+            mavenAuthenticateFeed: false
+            effectivePomSkip: false
+            sonarQubeRunAnalysis: false
