@@ -8,8 +8,8 @@ stages:
   jobs:
   - job: build
     steps:
-    - task: PowerShell@2
+    - task: JavaToolInstaller@1
       inputs:
-        targetType: 'inline'
-        script: |
-          mvn clean package
+        versionSpec: '17'
+        jdkArchitectureOption: 'x64'
+        jdkSourceOption: 'PreInstalled'
