@@ -11,16 +11,13 @@ stages:
           inputs:
             targetType: 'inline'
             script: 'mvn clean package'
-
-            
-        # - task: Maven@4
-        #   inputs:
-        #     azureSubscription: 'todo-service-connection'
-        #     mavenPomFile: 'pom.xml'
-        #     publishJUnitResults: true
-        #     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-        #     javaHomeOption: 'JDKVersion'
-        #     mavenVersionOption: 'Default'
-        #     mavenAuthenticateFeed: false
-        #     effectivePomSkip: false
-        #     sonarQubeRunAnalysis: false
+        - task: PublishPipelineArtifact@1
+          inputs:
+            targetPath: '$(Pipeline.SourceDirectory)/target/'
+            artifact: 'javaArtifact'
+            publishLocation: 'pipeline'
+        - task: DownloadPipelineArtifact@2
+          inputs:
+            buildType: 'current'
+            artifactName: 'javaArtifact'
+            targetPath: '$(Pipeline.Workspace)'
