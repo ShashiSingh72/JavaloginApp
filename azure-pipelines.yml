@@ -31,7 +31,5 @@ stages:
           inputs:
             targetType: 'inline'
             script: |
-              echo "Starting Tomcat..."
-                    C:\apache-tomcat-9\bin\shutdown.bat
-                    Start-Sleep -Seconds 5
-                    C:\apache-tomcat-9\bin\startup.bat
+              & "C:\Program Files\Apache Software Foundation\Tomcat 9.0\bin\shutdown.bat"
+              & "C:\Program Files\Apache Software Foundation\Tomcat 9.0\bin\startup.bat"
