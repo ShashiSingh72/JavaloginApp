@@ -21,3 +21,19 @@ stages:
             buildType: 'current'
             artifactName: 'javaArtifact'
             targetPath: '$(Pipeline.Workspace)'
+
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: |
+              echo "Copying WAR to Tomcat..."
+                    Copy-Item "$(Pipeline.Workspace)\javaArtifact\target\*.war" "C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps" -Force
+
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: |
+              echo "Starting Tomcat..."
+                    C:\apache-tomcat-9\bin\shutdown.bat
+                    Start-Sleep -Seconds 5
+                    C:\apache-tomcat-9\bin\startup.bat
