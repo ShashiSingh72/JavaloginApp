@@ -25,7 +25,7 @@ stages:
         - task: PowerShell@2
           inputs:
             targetType: 'inline'
-            script: 'Copy-Item "$(Pipeline.Workspace)\javaArtifact\*.war" "C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps" -Force'
+            script: 'Copy-Item "$(Pipeline.Workspace)\*.war" "C:\Program Files\Apache Software Foundation\Tomcat 9.0\webapps" -Force'
 
         - task: PowerShell@2
           inputs:
