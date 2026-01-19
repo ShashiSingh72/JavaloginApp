@@ -13,7 +13,7 @@ stages:
             script: 'mvn clean package'
         - task: PublishPipelineArtifact@1
           inputs:
-            targetPath: '$(Pipeline.SourceDirectory)/target/'
+            targetPath: '$(Build.SourceDirectory)/target/'
             artifact: 'javaArtifact'
             publishLocation: 'pipeline'
         - task: DownloadPipelineArtifact@2
