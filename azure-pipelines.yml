@@ -1,6 +1,6 @@
 trigger: none
 
-pool: my agent pool
+pool: TodoAgent
 
 stages:
   - stage: build
